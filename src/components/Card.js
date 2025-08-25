@@ -1,14 +1,18 @@
 import {View, Text, StyleSheet} from 'react-native';
+import { Image } from 'expo-image';
 
-export default function Card() {
+export default function Card({ title, desc, img }) {
     return (
         <>
         <View style={styles.card}>
-            <View style={styles.logo}></View>
+            <Image 
+              style={styles.logo}
+              source={img}
+            />
                 
             <View style={styles.name}>
-                <Text style={styles.titulo_card}>Card </Text>
-                <Text>Descrição do card</Text>
+                <Text style={styles.titulo_card}>{title}</Text>
+                <Text>{desc}</Text>
             </View>
         </View>
         </>

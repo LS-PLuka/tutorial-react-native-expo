@@ -1,11 +1,17 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { Image } from 'expo-image'
+import Feather from '@expo/vector-icons/Feather';
 
-export default function Header() {
+export default function Header({ img }) {
     return (
         <>
         <View style={styles.header}>
-            <View style={styles.logo}></View>
-            <Text style={styles.titulo_menu}>Título</Text>
+            <Image 
+              style={styles.logo}
+              source={img}
+            />
+            
+            <Feather name="menu" size={30} color="white" />
         </View>
         </>
     )
