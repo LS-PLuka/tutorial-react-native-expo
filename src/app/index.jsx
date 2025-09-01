@@ -1,15 +1,22 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { Link } from 'expo-router';
 
 // Importando Componentes
-import Header from './src/components/Header.js';
-import Card from './src/components/Card.js';
-import Botao from './src/components/Botao.js';
-import Footer from './src/components/Footer.js';
+import Header from '../components/Header.jsx';
+import Card from '../components/Card.jsx';
+import Botao from '../components/Botao.jsx';
+import Footer from '../components/Footer.jsx';
 
-export default function App() {
+export default function Home() {
   return (
     <View style={styles.container}>
       <Header img='https://s3.amazonaws.com/chico-rei-blogs/content/images/2021/10/capa-cinema-em-casa.jpg' />
+      
+      <View style={styles.nav}>
+        <Link href={'contact'} style={styles.navLink}><Text>Contato</Text></Link>
+        <Link href={'about'} style={styles.navLink}><Text>Sobre</Text></Link>
+        <Link href={'profile'} style={styles.navLink}><Text>Perfil</Text></Link>
+      </View>
 
       <Card 
         title='Breaking Bad' 
@@ -53,5 +60,16 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  nav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '90%',
+    marginVertical: 15,
+  },
+  navLink: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#543DBB',
   },
 })
