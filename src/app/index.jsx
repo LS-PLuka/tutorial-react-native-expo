@@ -16,6 +16,7 @@ export default function Home() {
         <Link href={'contact'} style={styles.navLink}><Text>Contato</Text></Link>
         <Link href={'about'} style={styles.navLink}><Text>Sobre</Text></Link>
         <Link href={'profile'} style={styles.navLink}><Text>Perfil</Text></Link>
+        <Link href={'signup'} style={styles.navLink}><Text>Signup</Text></Link>
       </View>
 
       <Card 
