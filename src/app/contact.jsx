@@ -1,85 +1,60 @@
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import CardUser from '../components/CardUser.jsx';
 
 export default function Contact() {
-    const router = useRouter();
+  const router = useRouter();
+  const [users, setUsers] = useState([]);
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Página de Contatos</Text>
+  useEffect(() => {
+    async function listUsers() {
+      try {
+        const response = await fetch('http://localhost:5000/user')
+        if (response.ok) {
+          const data = await response.json()
+          setUsers(data.users)
+        } else {
+          console.log('Erro ao listar usuários.')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    listUsers();
+  }, [])
 
-            <View style={styles.card}>
-                <Text style={styles.name}>Pedro Silva</Text>
-                <Text style={styles.info}>pedro@email.com</Text>
-                <Text style={styles.info}>(12) 99999-9999</Text>
-            </View>
-
-            <View style={styles.card}>
-                <Text style={styles.name}>Maria Souza</Text>
-                <Text style={styles.info}>maria@email.com</Text>
-                <Text style={styles.info}>(12) 98888-8888</Text>
-            </View>
-
-            <View style={styles.card}>
-                <Text style={styles.name}>João Santos</Text>
-                <Text style={styles.info}>joao@email.com</Text>
-                <Text style={styles.info}>(12) 97777-7777</Text>
-            </View>
-
-            <Button 
-                title="Home"  
-                onPress={() => router.replace('/')}
-                color="#543DBB"
-            />
-
-            <Button 
-                title="Sobre Nós"  
-                onPress={() => router.push('about')}
-                color="#543DBB"
-            />
-
-            <Button 
-                title="Perfil"  
-                onPress={() => router.push('profile')}
-                color="#543DBB"
-            />
-        </View>
-    )
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Página de Contatos</Text>
+      
+      {users.map(user => (
+        <CardUser
+          key={user.id}
+          id={user.id}
+          name={user.name}
+          email={user.email}
+          avatar={user.avatar}
+          users={users}
+          setUsers={setUsers}
+        />
+      ))}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5F5F5',
-        padding: 20,
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        color: '#333',
-    },
-    card: {
-        backgroundColor: '#fff',
-        padding: 15,
-        marginBottom: 15,
-        borderRadius: 10,
-        width: '90%',
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 5,
-        elevation: 3,
-    },
-    name: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    info: {
-        fontSize: 14,
-        color: '#555',
-    },
-})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+    padding: 20,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+  },
+});

@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 
-export default function Signup() {
+export default function EditUser() {
   const router = useRouter();
 
   const [name, setName] = useState('');

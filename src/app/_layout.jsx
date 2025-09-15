@@ -40,6 +40,15 @@ export default function RootLayout() {
                     tabBarIcon: () => <Feather name="user" size={24} color="#543DBB" />
                 }}
             />
+
+            <Tabs.Screen 
+                name="editUser"
+                options={{ 
+                    title: 'Edit User',
+                    tabBarShowLabel: false,
+                    tabBarIcon: () => <Feather name="edit" size={24} color="#543DBB" />
+                }}
+            />
         </Tabs>
     )
 }
