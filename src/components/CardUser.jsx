@@ -3,15 +3,17 @@ import { Image } from 'expo-image';
 import { router, useRouter } from 'expo-router';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useUserStore } from '../stores/useUserStore.js';
 
-export default function CardUser({ id, name, email, avatar, users, setUsers }) {
+export default function CardUser({ id, name, email, avatar }) {
     const router = useRouter()
-  
+    const {users, setUsers} = useUserStore()
+
     const handleDelete = async () => {
     const response = await fetch(`http://localhost:5000/user/${id}`, {
         method: 'DELETE',
     })
-    
+
     if (response.ok) {
         console.log('Usuário deletado com sucesso.')
         const updateUsers = users.filter(user => user.id !== id)
@@ -22,14 +24,12 @@ export default function CardUser({ id, name, email, avatar, users, setUsers }) {
   }
 
   const handleEdit = async () => {
-    console.log('EDITAR USUÁRIO.')
-
     router.push({
         pathname: '/editUser',
-        params: { id, name, email, pass, avatar }
+        params: { id, name, email, avatar }
     })
   }
-    
+
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{ uri: avatar }} />

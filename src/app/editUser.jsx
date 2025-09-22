@@ -1,42 +1,53 @@
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
 import { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useGlobalSearchParams, useRouter } from 'expo-router';
+import { useUserStore } from '../stores/useUserStore.js';
 
 export default function EditUser() {
   const router = useRouter();
+  const {users, setUsers } = useUserStore()
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [avatar, setAvatar] = useState('');
+  const {id, name: eName, email: eEmail, avatar: eAvatar} = useGlobalSearchParams()
 
-  const handleSignup = async () => {
-    const user = {
+  const [name, setName] = useState(eName);
+  const [email, setEmail] = useState(eEmail);
+  const [avatar, setAvatar] = useState(eAvatar);
+
+  const handleEdit = async () => {
+    const profile = {
         name,
         email,
-        pass,
         avatar
     }
 
-    const response = await fetch('http://localhost:5000/user', {
-        method: 'POST',
-        body: JSON.stringify(user),
+    const response = await fetch(`http://localhost:5000/user/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(profile),
         headers: {
             'Content-Type': 'application/json'
         }
     })
 
     if (response.ok) {
-      console.log('Usuário cadastrado com sucesso');
-      router.push('/profile');
+      console.log('Usuário editado com sucesso');
+      
+      const updateUsers = users.map(user => {
+        if (user.id === id) {
+          return { id, ...profile }
+        }
+        return user
+      })
+      
+      setUsers(updateUsers)
+      router.push('/contact');
     } else {
-      console.log('Erro ao cadastrar usuário');
+      console.log('Erro ao editar usuário');
     }
   }
 
 return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cadastro</Text>
+      <Text style={styles.title}>Editar Usuário</Text>
 
       <TextInput 
         style={styles.input}
@@ -54,13 +65,6 @@ return (
 
       <TextInput 
         style={styles.input}
-        value={pass}
-        onChangeText={setPass}
-        placeholder="Senha"
-      />
-
-      <TextInput 
-        style={styles.input}
         value={avatar}
         onChangeText={setAvatar}
         placeholder="Avatar (URL)"
@@ -68,8 +72,8 @@ return (
 
       <View style={styles.buttonContainer}>
         <Button 
-          title="Cadastrar" color="#543DBB"
-          onPress={handleSignup} 
+          title="Editar" color="#543DBB"
+          onPress={handleEdit} 
         />
       </View>
     </View>

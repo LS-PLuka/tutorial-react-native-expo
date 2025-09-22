@@ -28,7 +28,7 @@ export default function Signup() {
 
     if (response.ok) {
       console.log('Usuário cadastrado com sucesso');
-      router.push('/profile');
+      router.push('/contact');
     } else {
       console.log('Erro ao cadastrar usuário');
     }
