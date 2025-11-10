@@ -6,6 +6,7 @@ import Header from '../components/Header.jsx';
 import Card from '../components/Card.jsx';
 import Botao from '../components/Botao.jsx';
 import Footer from '../components/Footer.jsx';
+import { use, useEffect } from 'react';
 
 export default function Home() {
   return (

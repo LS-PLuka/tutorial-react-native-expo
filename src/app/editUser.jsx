@@ -30,7 +30,7 @@ export default function EditUser() {
 
     if (response.ok) {
       console.log('Usuário editado com sucesso');
-      
+
       const updateUsers = users.map(user => {
         if (user.id === id) {
           return { id, ...profile }
